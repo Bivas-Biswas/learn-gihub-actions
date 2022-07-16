@@ -7,7 +7,8 @@
     "build": "ncc build src/action.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "bump": "npm version",
-    "start": "nodemon src/action.js"
+    "dev": "nodemon src/action.js",
+    "start": "node src/action.js"
   },
   "author": "",
   "license": "ISC",

@@ -8102,6 +8102,8 @@ async function run() {
   const { data } = res;
   const firstEntry = data[0];
   console.log(`${firstEntry.character}: ${firstEntry.quote}`);
+
+  core.setOutput("quote", firstEntry);
 }
 
 run();
