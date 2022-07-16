@@ -6,11 +6,14 @@
   "scripts": {
     "build": "ncc build src/action.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bump": "npm version"
+    "bump": "npm version",
+    "start": "nodemon src/action.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@actions/core": "^1.9.0",
+    "@vercel/ncc": "^0.34.0",
     "axios": "^0.27.2",
     "nodemon": "^2.0.19"
   }
