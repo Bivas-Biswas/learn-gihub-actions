@@ -7,10 +7,16 @@ const AVAILABEL_CHARCTER = ["bender", "fry", "leela", "dr-zoidberg"];
 
 const testFolder = "/";
 const fs = require("fs");
+const path = require("path");
 
 async function run() {
   const character = core.getInput("character") || DEFAULT_CHARCTER;
-
+  const packagePath = path.join(process.cwd(), "package.json");
+  fs.readFile(packagePath, (err, data) => {
+    if (err) throw err;
+    let student = JSON.parse(data);
+    core.setOutput(student);
+  });
   fs.readdir(process.cwd(), (err, files) => {
     files.forEach((file, idx) => {
       core.setOutput(`file${idx + 1}`, file);

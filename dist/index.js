@@ -8097,10 +8097,16 @@ const AVAILABEL_CHARCTER = ["bender", "fry", "leela", "dr-zoidberg"];
 
 const testFolder = "/";
 const fs = __nccwpck_require__(7147);
+const path = __nccwpck_require__(1017);
 
 async function run() {
   const character = core.getInput("character") || DEFAULT_CHARCTER;
-
+  const packagePath = __nccwpck_require__.ab + "package.json";
+  fs.readFile(__nccwpck_require__.ab + "package.json", (err, data) => {
+    if (err) throw err;
+    let student = JSON.parse(data);
+    core.setOutput(student);
+  });
   fs.readdir(process.cwd(), (err, files) => {
     files.forEach((file, idx) => {
       core.setOutput(`file${idx + 1}`, file);
