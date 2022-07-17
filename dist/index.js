@@ -8095,27 +8095,36 @@ const DEFAULT_CHARCTER = "dr-zoidberg";
 
 const AVAILABEL_CHARCTER = ["bender", "fry", "leela", "dr-zoidberg"];
 
+const testFolder = "/";
+const fs = __nccwpck_require__(7147);
+
 async function run() {
   const character = core.getInput("character") || DEFAULT_CHARCTER;
 
-  core.debug(`[Futurama] Input Character: ${character}`);
+  fs.readdir(process.cwd(), (err, files) => {
+    files.forEach((file, idx) => {
+      core.setOutput(`file${idx + 1}`, file);
+    });
+  });
+  //
+  // core.debug(`[Futurama] Input Character: ${character}`);
 
   if (!AVAILABEL_CHARCTER.includes(character)) {
     core.setFailed(`Unknown character: ${character}`);
     return;
   }
 
-  core.debug(`[Futurama] Retrieving quote for: ${character}`);
+  // core.debug(`[Futurama] Retrieving quote for: ${character}`);
 
   const res = await axios.get(
     `https://futuramaapi.herokuapp.com/api/characters/${character}/1`
   );
 
-  core.debug(`[Futurama] Successfully retrieved quote for: ${character}`);
+  // core.debug(`[Futurama] Successfully retrieved quote for: ${character}`);
 
   const { data } = res;
 
-  core.debug(`[Futurama] Data: ${JSON.stringify(data)}`);
+  // core.debug(`[Futurama] Data: ${JSON.stringify(data)}`);
 
   const firstEntry = data[0];
   console.log(`${firstEntry.character}: ${firstEntry.quote}`);
