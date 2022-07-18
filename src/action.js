@@ -10,10 +10,9 @@ async function run() {
   fs.readFile(packagePath, (err, data) => {
     if (err) throw err;
     let testFile = JSON.parse(data);
-
     if (testFile) {
       axios
-        .post("https://pz4k9u-3000.sse.codesandbox.io/api/users", {
+        .post("https://h3cv9k.sse.codesandbox.io/users", {
           data: { test_result: testFile },
         })
         .then((res) => {
