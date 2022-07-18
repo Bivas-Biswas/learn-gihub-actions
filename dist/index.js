@@ -8091,58 +8091,30 @@ var __webpack_exports__ = {};
 const axios = __nccwpck_require__(6545);
 const core = __nccwpck_require__(2186);
 
-const DEFAULT_CHARCTER = "dr-zoidberg";
-
-// const AVAILABEL_CHARCTER = ["bender", "fry", "leela", "dr-zoidberg"];
-
 const fs = __nccwpck_require__(7147);
 const path = __nccwpck_require__(1017);
+const testFilePath = "test-output.json";
 
 async function run() {
-  const character = core.getInput("character") || DEFAULT_CHARCTER;
-  const packagePath = __nccwpck_require__.ab + "package.json";
-  fs.readFile(__nccwpck_require__.ab + "package.json", (err, data) => {
+  const packagePath = path.join(process.cwd(), testFilePath);
+  fs.readFile(packagePath, (err, data) => {
     if (err) throw err;
-    let student = JSON.parse(data);
+    let testFile = JSON.parse(data);
 
-    axios
-      .post("https://pz4k9u-3000.sse.codesandbox.io/api/users", {
-        user: { ...student },
-      })
-      .then((res) => {
-        console.log(`Status: ${res.status}`);
-        console.log("Body: ", res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    // core.setOutput(JSON.stringify(student));
+    if (testFile) {
+      axios
+        .post("https://pz4k9u-3000.sse.codesandbox.io/api/users", {
+          data: { test_result: testFile },
+        })
+        .then((res) => {
+          console.log(`Status: ${res.status}`);
+          console.log("Body: ", res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   });
-  //
-  // core.debug(`[Futurama] Input Character: ${character}`);
-
-  // if (!AVAILABEL_CHARCTER.includes(character)) {
-  //   core.setFailed(`Unknown character: ${character}`);
-  //   return;
-  // }
-  //
-  // // core.debug(`[Futurama] Retrieving quote for: ${character}`);
-  //
-  // const res = await axios.get(
-  //   `https://futuramaapi.herokuapp.com/api/characters/${character}/1`
-  // );
-  //
-  // // core.debug(`[Futurama] Successfully retrieved quote for: ${character}`);
-  //
-  // const { data } = res;
-  //
-  // // core.debug(`[Futurama] Data: ${JSON.stringify(data)}`);
-  //
-  // const firstEntry = data[0];
-  // console.log(`${firstEntry.character}: ${firstEntry.quote}`);
-  //
-  // core.setOutput("quote", firstEntry);
 }
 
 run();

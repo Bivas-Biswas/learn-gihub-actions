@@ -1,16 +1,6 @@
-name: 'Hello World'
-description: 'Saying hello to the world'
+name: 'Sending testing data to api'
+description: ''
 author: 'Bivas'
-
-inputs:
-  character:
-    description: 'Futurama Character'
-    required: true
-    default: 'dr-zoidberg'
-
-outputs:
-  quote:
-    description: 'The resulting futurama quote'
 
 runs:
   using: 'node12'

@@ -1,6 +1,6 @@
-name: helloworld
+name: send testing data to api
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
 
@@ -9,10 +9,3 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
-        with:
-          character: bender
-        id: futurama
-      - uses: ./
-        with:
-          character: bivas
-      - run: echo ${{steps.futurama.outputs.quote}}
