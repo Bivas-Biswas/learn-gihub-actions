@@ -8100,6 +8100,7 @@ async function run() {
   fs.readFile(packagePath, (err, data) => {
     if (err) throw err;
     let testFile = JSON.parse(data);
+    console.log(testFile);
     if (testFile) {
       axios
         .post("https://h3cv9k.sse.codesandbox.io/users", {
