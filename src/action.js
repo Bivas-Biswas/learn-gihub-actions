@@ -35,7 +35,7 @@ async function run() {
 
     shell.exec("npm run test-out");
 
-    fs.readFileSync(testOutputFilePath, (err, data) => {
+    fs.readFile(testOutputFilePath, (err, data) => {
       if (err) throw err;
       let testFile = JSON.parse(data);
       console.log(testFile);
