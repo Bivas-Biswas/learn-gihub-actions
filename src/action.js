@@ -22,7 +22,7 @@ async function run() {
       });
     }
 
-    fs.writeFile(
+    fs.writeFileSync(
       path.join(process.cwd(), testFile.path),
       testFile.content,
       (err) => {
@@ -35,7 +35,7 @@ async function run() {
 
     shell.exec("npm run test-out");
 
-    fs.readFile(testOutputFilePath, (err, data) => {
+    fs.readFileSync(testOutputFilePath, (err, data) => {
       if (err) throw err;
       let testFile = JSON.parse(data);
       console.log(testFile);
