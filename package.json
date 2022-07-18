@@ -17,5 +17,8 @@
     "@vercel/ncc": "^0.34.0",
     "axios": "^0.27.2",
     "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "shelljs": "^0.8.5"
   }
 }
