@@ -15395,7 +15395,7 @@ const shell = __nccwpck_require__(3516);
 
 const fs = __nccwpck_require__(7147);
 const path = __nccwpck_require__(1017);
-const testFilePath = "test-output.json";
+
 const testData = {
   path: "src/__test__/App.test.js",
   content: `import { render, screen } from "@testing-library/react";
@@ -15425,10 +15425,12 @@ describe("Element test in the page", () => {
 };
 
 async function run() {
+  const testFilePath = "test-output.json";
   const testOutputFilePath = path.join(process.cwd(), testFilePath);
   const testFolder = path.join(process.cwd(), "src/__test__/");
 
   shell.exec("npm ci");
+
   if (!fs.existsSync(testFolder)) {
     fs.mkdirSync(testFolder, {
       recursive: true,
@@ -15446,7 +15448,7 @@ async function run() {
     }
   );
 
-  shell.exec("npm run test-output");
+  shell.exec("npm run test-out");
 
   fs.readFile(testOutputFilePath, (err, data) => {
     if (err) throw err;
