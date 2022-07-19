@@ -5,3 +5,14 @@ author: 'Bivas'
 runs:
   using: 'node12'
   main: 'dist/index.js'
+
+inputs:
+  user_id:
+    description: 'user id'
+    required: true
+    default: ''
+
+  tha_no:
+    description: 'frontend tha number'
+    required: true
+    default: ''

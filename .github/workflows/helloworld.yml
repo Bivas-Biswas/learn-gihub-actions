@@ -9,3 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        with:
+          user_id: '1234'
+          tha_no: '20'
