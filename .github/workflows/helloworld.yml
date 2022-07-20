@@ -11,4 +11,4 @@ jobs:
       - uses: ./
         with:
           user_id: ${{ secrets.DEVSNEST_USER_ID }}
-          tha_no: ${{ secrets.DEVSNEST_THA_NO }
+          tha_no: ${{ secrets.DEVSNEST_THA_NO }}
