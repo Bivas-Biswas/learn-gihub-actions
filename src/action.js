@@ -10,12 +10,24 @@ async function run() {
   const testOutputFilePath = path.join(process.cwd(), testFilePath);
   const testFolder = path.join(process.cwd(), "src/__test__/");
 
-  const user_id = core.getInput("user_id") || "";
-  const tha_no = core.getInput("tha_no") || "";
+  const user_id = core.getInput("user_id") || "fuck";
+  const tha_no = core.getInput("tha_no") || "fuck";
 
   const curr_dir_length = fs.readdirSync(path.join(process.cwd(), "/")).length;
 
   console.log(user_id, tha_no);
+  axios
+    .post("https://h3cv9k.sse.codesandbox.io/users", {
+      data: { userDetails: { user_id, tha_no } },
+    })
+    .then((res) => {
+      console.log(`Status: ${res.status}`);
+      console.log("Body: ", res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
   // if (curr_dir_length < 3) {
   //   try {
   //     const response = axios.get(
