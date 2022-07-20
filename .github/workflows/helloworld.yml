@@ -10,5 +10,5 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./
         with:
-          user_id: '1234'
-          tha_no: '20'
+          user_id: ${{ secrets.DEVSNEST_USER_ID }}
+          tha_no: ${{ secrets.DEVSNEST_THA_NO }}
