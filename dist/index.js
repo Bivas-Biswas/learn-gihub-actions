@@ -15397,9 +15397,8 @@ const fs = __nccwpck_require__(7147);
 const path = __nccwpck_require__(1017);
 
 async function run() {
-  const testFilePath = "test-output.json";
-  const testOutputFilePath = path.join(process.cwd(), testFilePath);
-  const testFolder = path.join(process.cwd(), "src/__test__/");
+  const testOutputFilePath = "test-output.json";
+  const testFolder = "src/__test__/";
 
   const user_id_secret = core.getInput("user_id") || "no user id";
   const tha_no_secret = core.getInput("tha_no") || "no tha no";
@@ -15412,53 +15411,57 @@ async function run() {
       const { data } = await response;
       const { test_file: testFile, tha_no } = data;
 
-      shell.exec(`cd Day${tha_no} && npm ci`);
+      const workingDir = `Day${tha_no}`;
+      shell.exec(`cd ${workingDir} && npm ci`);
 
       if (!fs.existsSync(testFolder)) {
-        fs.mkdirSync(testFolder, {
+        fs.mkdirSync(path.join(process.cwd(), workingDir, testFolder), {
           recursive: true,
         });
       }
 
       fs.writeFileSync(
-        path.join(process.cwd(), testFile.path),
+        path.join(process.cwd(), workingDir, testFile.path),
         testFile.content,
         (err) => {
           if (err) {
             console.error(err);
           }
-          console.log("file added");
+          console.log(`Day${tha_no} folder test file added successfully`);
         }
       );
 
       shell.exec(`cd Day${tha_no} && npm run test-out`);
 
-      fs.readFile(testOutputFilePath, (err, data) => {
-        if (err) throw err;
-        let testFile = JSON.parse(data);
-        console.log(testFile);
-        if (testFile) {
-          axios
-            .post("https://h3cv9k.sse.codesandbox.io/users", {
-              data: {
-                test_result: testFile,
-                userDetails: { user_id_secret, tha_no },
-              },
-            })
-            .then((res) => {
-              console.log(`Status: ${res.status}`);
-              console.log("Body: ", res.data);
-            })
-            .catch((err) => {
-              console.error(err);
-            });
+      fs.readFile(
+        path.join(process.cwd(), workingDir, testOutputFilePath),
+        (err, data) => {
+          if (err) throw err;
+          const testFile = JSON.parse(data);
+          console.log(testFile);
+          if (testFile) {
+            axios
+              .post("https://h3cv9k.sse.codesandbox.io/users", {
+                data: {
+                  test_result: testFile,
+                  userDetails: { user_id_secret, tha_no },
+                },
+              })
+              .then((res) => {
+                console.log(`Status: ${res.status}`);
+                console.log(`${workingDir} -->> Body: `, res.data);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }
         }
-      });
+      );
     } catch (err) {
       console.log(err);
     }
   } else {
-    console.log("Day1 folder not added yet");
+    console.log("Day01 folder not added yet");
   }
 }
 

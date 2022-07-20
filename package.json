@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "bump": "npm version",
     "dev": "nodemon src/action.js",
-    "start": "node src/action.js"
+    "start": "node src/action.js",
+    "push": "yarn build && git add . && git commit -m 'testing multiple folder' && git push"
   },
   "author": "",
   "license": "ISC",
