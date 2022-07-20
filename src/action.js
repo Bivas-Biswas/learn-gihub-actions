@@ -10,16 +10,16 @@ async function run() {
   const testOutputFilePath = path.join(process.cwd(), testFilePath);
   const testFolder = path.join(process.cwd(), "src/__test__/");
 
-  const user_id = core.getInput("user_id") || "no user id";
-  const tha_no = core.getInput("tha_no") || "no tha no";
+  const user_id_secret = core.getInput("user_id") || "no user id";
+  const tha_no_secret = core.getInput("tha_no") || "no tha no";
 
   if (fs.existsSync(path.join(process.cwd(), "Day01"))) {
     try {
       const response = axios.get(
-        `https://h3cv9k.sse.codesandbox.io/users?user_id=${user_id}&tha_no=${tha_no}`
+        `https://h3cv9k.sse.codesandbox.io/users/user_id=${user_id}&tha_no=${tha_no_secret}`
       );
       const { data } = await response;
-      const { test_file: testFile } = data;
+      const { test_file: testFile, tha_no } = data;
 
       shell.exec(`cd Day${tha_no}`);
       shell.exec("npm ci");
@@ -50,7 +50,10 @@ async function run() {
         if (testFile) {
           axios
             .post("https://h3cv9k.sse.codesandbox.io/users", {
-              data: { test_result: testFile, userDetails: { user_id, tha_no } },
+              data: {
+                test_result: testFile,
+                userDetails: { user_id_secret, tha_no },
+              },
             })
             .then((res) => {
               console.log(`Status: ${res.status}`);
