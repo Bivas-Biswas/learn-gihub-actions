@@ -15407,7 +15407,7 @@ async function run() {
   if (fs.existsSync(path.join(process.cwd(), "Day01"))) {
     try {
       const response = axios.get(
-        `https://h3cv9k.sse.codesandbox.io/users/user_id=${user_id}&tha_no=${tha_no_secret}`
+        `https://h3cv9k.sse.codesandbox.io/users/user_id=${user_id_secret}&tha_no=${tha_no_secret}`
       );
       const { data } = await response;
       const { test_file: testFile, tha_no } = data;
