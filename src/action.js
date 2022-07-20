@@ -40,7 +40,7 @@ async function run() {
         }
       );
 
-      shell.exec("npm run test-out");
+      shell.exec(`cd Day${tha_no} && npm run test-out`);
 
       fs.readFile(testOutputFilePath, (err, data) => {
         if (err) throw err;
