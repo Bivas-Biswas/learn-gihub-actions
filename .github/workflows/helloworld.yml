@@ -12,3 +12,6 @@ jobs:
         with:
           user_id: ${{ secrets.DEVSNEST_USER_ID }}
           tha_no: ${{ secrets.DEVSNEST_THA_NO }}
+        
+      - run: |
+          echo ${{ secrets.DEVSNEST_THA_NO }} | sed "s/./& /g"
