@@ -15412,8 +15412,7 @@ async function run() {
       const { data } = await response;
       const { test_file: testFile, tha_no } = data;
 
-      shell.exec(`cd Day${tha_no}`);
-      shell.exec("npm ci");
+      shell.exec(`cd Day${tha_no} && npm ci`);
 
       if (!fs.existsSync(testFolder)) {
         fs.mkdirSync(testFolder, {
