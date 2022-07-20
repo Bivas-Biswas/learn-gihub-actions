@@ -20,7 +20,14 @@ async function run() {
       const { data } = await response;
       const { test_file: testFile, tha_no } = data;
 
-      const workingDir = `Day${tha_no}`;
+      let workingDir = "";
+
+      if (parseInt(tha_no) < 10) {
+        workingDir = `Day0${tha_no}`;
+      } else {
+        workingDir = `Day${tha_no}`;
+      }
+
       shell.exec(`cd ${workingDir} && npm ci`);
 
       if (!fs.existsSync(testFolder)) {
@@ -34,7 +41,7 @@ async function run() {
         testFile.content,
         (err) => {
           if (err) {
-            console.error(err);
+            core.error(err);
           }
           console.log(`Day${tha_no} folder test file added successfully`);
         }
@@ -62,7 +69,7 @@ async function run() {
                 console.log(`${workingDir} -->> Body: `, res.data);
               })
               .catch((err) => {
-                console.error(err);
+                core.error(err);
               });
           }
         }
@@ -71,7 +78,7 @@ async function run() {
       console.log(err);
     }
   } else {
-    console.log("Day01 folder not added yet");
+    core.error("No THA added by Devsnest ");
   }
 }
 
