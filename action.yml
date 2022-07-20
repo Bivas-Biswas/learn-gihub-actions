@@ -10,9 +10,7 @@ inputs:
   user_id:
     description: 'user id'
     required: true
-    default: 'user id - 0'
 
   tha_no:
     description: 'frontend tha number'
     required: true
-    default: 'tha number - 0'
