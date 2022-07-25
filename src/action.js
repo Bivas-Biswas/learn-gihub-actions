@@ -14,10 +14,10 @@ async function run() {
       const response = axios.get(
         `https://h3cv9k.sse.codesandbox.io/frontend_challeges?tha_no=${tha_no_secret}`
       );
-      const { data } = await response;
-      const { test_file, tha_no, folder_name } = data.data.attributes;
 
+      const { data } = await response;
       console.log("test-cases -->", data);
+      const { test_file, tha_no, folder_name } = data.data.attributes;
 
       shell.exec(`cd ${folder_name} && npm ci`);
 
