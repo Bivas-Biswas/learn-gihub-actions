@@ -15456,7 +15456,7 @@ async function run() {
               )
               .then((res) => {
                 console.log(`Status: ${res.status}`);
-                console.log(`${workingDir} -->> Body: `, res.data);
+                console.log(`${folder_name} -->> Body: `, res.data);
               })
               .catch((err) => {
                 core.error(err);
