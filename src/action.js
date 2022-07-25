@@ -6,9 +6,6 @@ const fs = require("fs");
 const path = require("path");
 
 async function run() {
-  const testOutputFilePath = "test-output.json";
-  const testFolder = "src/__test__/";
-
   const user_id_secret = core.getInput("user_id") || "no user id";
   const tha_no_secret = core.getInput("tha_no") || "0";
 
@@ -18,27 +15,19 @@ async function run() {
         `https://h3cv9k.sse.codesandbox.io/frontend_challeges?user_id=${user_id_secret}&tha_no=${tha_no_secret}`
       );
       const { data } = await response;
-      const { test_file: testFile, tha_no } = data.data.attributes;
+      const { test_file, tha_no, folder_name } = data.data.attributes;
 
-      let workingDir = "";
+      shell.exec(`cd ${folder_name} && npm ci`);
 
-      if (parseInt(tha_no) < 10) {
-        workingDir = `Day0${tha_no}`;
-      } else {
-        workingDir = `Day${tha_no}`;
-      }
-
-      shell.exec(`cd ${workingDir} && npm ci`);
-
-      if (!fs.existsSync(testFolder)) {
-        fs.mkdirSync(path.join(process.cwd(), workingDir, testFolder), {
+      if (!fs.existsSync("src/__test__/")) {
+        fs.mkdirSync(path.join(process.cwd(), folder_name, "src/__test__/"), {
           recursive: true,
         });
       }
 
       fs.writeFileSync(
-        path.join(process.cwd(), workingDir, testFile.path),
-        testFile.content,
+        path.join(process.cwd(), folder_name, test_file.path),
+        test_file.content,
         (err) => {
           if (err) {
             core.error(err);
@@ -50,7 +39,7 @@ async function run() {
       shell.exec(`cd Day${tha_no} && npm run test-out`);
 
       fs.readFile(
-        path.join(process.cwd(), workingDir, testOutputFilePath),
+        path.join(process.cwd(), folder_name, "test-output.json"),
         (err, data) => {
           if (err) throw err;
           const test_result = JSON.parse(data);
