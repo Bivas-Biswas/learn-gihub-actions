@@ -15401,15 +15401,15 @@ async function run() {
   const testFolder = "src/__test__/";
 
   const user_id_secret = core.getInput("user_id") || "no user id";
-  const tha_no_secret = core.getInput("tha_no") || "no tha no";
+  const tha_no_secret = core.getInput("tha_no") || "0";
 
   if (fs.existsSync(path.join(process.cwd(), "Day01"))) {
     try {
       const response = axios.get(
-        `https://h3cv9k.sse.codesandbox.io/users?user_id=${user_id_secret}&tha_no=${tha_no_secret}`
+        `https://h3cv9k.sse.codesandbox.io/frontend_challeges?user_id=${user_id_secret}&tha_no=${tha_no_secret}`
       );
       const { data } = await response;
-      const { test_file: testFile, tha_no } = data;
+      const { test_file: testFile, tha_no } = data.data.attributes;
 
       let workingDir = "";
 
@@ -15444,17 +15444,25 @@ async function run() {
         path.join(process.cwd(), workingDir, testOutputFilePath),
         (err, data) => {
           if (err) throw err;
-          const testFile = JSON.parse(data);
-          console.log(testFile);
-          if (testFile) {
+          const test_result = JSON.parse(data);
+          console.log(test_result);
+          if (test_result) {
+            const data = {
+              type: "frontend_challeges",
+              attributes: {
+                tha_no: tha_no,
+                user_id: user_id_secret,
+                test_result: test_result,
+              },
+            };
+
             axios
-              .post("https://h3cv9k.sse.codesandbox.io/users", {
-                data: {
-                  test_result: testFile,
-                  userDetails: { user_id: user_id_secret, tha_no },
-                  send_at: new Date(Date.now()),
-                },
-              })
+              .post(
+                `https://h3cv9k.sse.codesandbox.io/frontend_challeges?user_id=${user_id_secret}&tha_no=${tha_no}`,
+                {
+                  data,
+                }
+              )
               .then((res) => {
                 console.log(`Status: ${res.status}`);
                 console.log(`${workingDir} -->> Body: `, res.data);
