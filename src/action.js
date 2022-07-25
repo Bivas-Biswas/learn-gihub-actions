@@ -17,7 +17,8 @@ async function run() {
       const { data } = await response;
       const { test_file, tha_no, folder_name } = data.data.attributes;
 
-      console.log(data);
+      console.log("test-cases -->", data);
+
       shell.exec(`cd ${folder_name} && npm ci`);
 
       if (!fs.existsSync("src/__test__/")) {
@@ -33,11 +34,11 @@ async function run() {
           if (err) {
             core.error(err);
           }
-          console.log(`Day${tha_no} folder test file added successfully`);
+          console.log(`${folder_name} folder test file added successfully`);
         }
       );
 
-      shell.exec(`cd Day${tha_no} && npm run test-out`);
+      shell.exec(`cd ${folder_name} && npm run test-out`);
 
       fs.readFile(
         path.join(process.cwd(), folder_name, "test-output.json"),
