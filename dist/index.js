@@ -15407,7 +15407,7 @@ async function run() {
       );
 
       const { data } = await response;
-      console.log("test-cases -->", data);
+
       const { test_file, tha_no, folder_name } = data.data.attributes;
 
       shell.exec(`cd ${folder_name} && npm ci`);
@@ -15443,6 +15443,7 @@ async function run() {
               attributes: {
                 tha_no: tha_no,
                 user_id: user_id_secret,
+                folder_name: folder_name,
                 test_result: test_result,
               },
             };
