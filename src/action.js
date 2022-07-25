@@ -12,11 +12,12 @@ async function run() {
   if (fs.existsSync(path.join(process.cwd(), "Day01"))) {
     try {
       const response = axios.get(
-        `https://h3cv9k.sse.codesandbox.io/frontend_challeges?user_id=${user_id_secret}&tha_no=${tha_no_secret}`
+        `https://h3cv9k.sse.codesandbox.io/frontend_challeges?tha_no=${tha_no_secret}`
       );
       const { data } = await response;
       const { test_file, tha_no, folder_name } = data.data.attributes;
 
+      console.log(data);
       shell.exec(`cd ${folder_name} && npm ci`);
 
       if (!fs.existsSync("src/__test__/")) {
